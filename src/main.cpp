@@ -62,8 +62,14 @@ int main() {
     std::cout << "List tail value: " << myList.tail()->value << "\n";
  
     // Find value in the list - returns pointer
-    int val = 1;
-    std::cout << "Find " << val << ": " << myList.find(val, myList.head(), myList.tail())->value << "\n";
+    int val = 3;
+    auto foundNode = myList.find(val, myList.head(), myList.tail());
+    if (foundNode) {
+        std::cout << "Find " << val << ": " << foundNode->value << "\n";
+    } else {
+        std::cout << "Node not found\n";
+    }
+    
     
     // Remove value from the list
     myList.remove(myList.find(val, myList.head(), myList.tail()));
