@@ -1,4 +1,5 @@
 #include "SinglyLinkedList.hpp"
+#include "Stack.hpp"
 #include <list>
 
 void print(const SinglyLinkedList& currList) {
@@ -11,7 +12,12 @@ void print(const SinglyLinkedList& currList) {
     std::cout << "\n";
 }
 
+
+
 int main() {
+    
+    /* === LINKED LIST === */
+    std::cout << "=== LINKED LIST ===\n";
     
     // List init
     SinglyLinkedList myList;
@@ -43,7 +49,6 @@ int main() {
     std::cout << "Print list after adding nodes to the front: \n";
     print(myList);
     std::cout << "List size: " << myList.size() << "\n";
-
     
     // Pop nodes from the front of the list
     myList.pop_front();
@@ -51,7 +56,6 @@ int main() {
     print(myList);
     std::cout << "List size: " << myList.size() << "\n";
 
- 
     // Front node value
     std::cout << "List front value: " << myList.front() << "\n";
     // Back node value
@@ -69,7 +73,6 @@ int main() {
     } else {
         std::cout << "Node not found\n";
     }
-    
     
     // Remove value from the list
     myList.remove(myList.find(val, myList.head(), myList.tail()));
@@ -89,4 +92,57 @@ int main() {
     print(myList);
     std::cout << "List size: " << myList.size() << "\n";
 
+    
+    std::cout << "\n";
+    std::cout << "\n";
+    
+    /* === STACK === */
+    std::cout << "=== STACK ===\n";
+    
+    // Stack init
+    Stack myStack;
+    
+    std::cout << "Empty? " << myStack.empty() << "\n";
+    std::cout << "Size: " << myStack.size() << "\n";
+    
+    try {
+        std::cout << "Top: " << myStack.top() << "\n";
+        std::cout << "Min: " << myStack.min() << "\n";
+        std::cout << "Max: " << myStack.max() << "\n";
+    }
+    catch (const std::out_of_range& e) {
+        std::cout << "Out of range error. " << e.what() << "\n";
+    }
+    
+    std::cout << "Push some integers: \n";
+    myStack.push(5);
+    myStack.push(3);
+    myStack.push(7);
+    
+    std::cout << "Empty? " << myStack.empty() << "\n";
+    std::cout << "Size: " << myStack.size() << "\n";
+    
+    try {
+        std::cout << "Top: " << myStack.top() << "\n";
+        std::cout << "Min: " << myStack.min() << "\n";
+        std::cout << "Max: " << myStack.max() << "\n";
+    }
+    catch (const std::out_of_range& e) {
+        std::cout << "Out of range error. " << e.what() << "\n";
+    }
+    
+    std::cout << "Pop some integers: \n";
+    myStack.pop();
+    
+    std::cout << "Empty? " << myStack.empty() << "\n";
+    std::cout << "Size: " << myStack.size() << "\n";
+        
+    try {
+        std::cout << "Top: " << myStack.top() << "\n";
+        std::cout << "Min: " << myStack.min() << "\n";
+        std::cout << "Max: " << myStack.max() << "\n";
+    }
+    catch (const std::out_of_range& e) {
+        std::cout << "Out of range error. " << e.what() << "\n";
+    }
 }
