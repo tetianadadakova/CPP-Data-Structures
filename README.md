@@ -1,4 +1,7 @@
 These are some data structures I am imlementing in C++.
+Currently has:
+Singly linked list
+Stack using vector
 
 To build:
 ```
