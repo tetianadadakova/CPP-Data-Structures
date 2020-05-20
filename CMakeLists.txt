@@ -6,7 +6,7 @@ project (DataStructures)
 include_directories(include)
 
 # Sources
-set(SOURCES include/SinglyLinkedList.hpp src/SinglyLinkedList.cpp include/Stack.hpp src/Stack.cpp src/main.cpp)
+set(SOURCES include/SinglyLinkedList.hpp src/SinglyLinkedList.cpp include/Stack.hpp src/Stack.cpp include/BinarySearchTree.hpp src/BinarySearchTree.cpp src/main.cpp)
 
 
 add_executable(DataStructures ${SOURCES})
