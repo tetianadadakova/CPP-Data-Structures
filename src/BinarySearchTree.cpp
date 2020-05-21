@@ -4,30 +4,26 @@ BinarySearchTree::BinarySearchTree() : root{nullptr}, tree_size{0} {}
 
 BinarySearchTree::BinarySearchTree(int value) : root{std::make_unique<Node>(value)}, tree_size{1} {}
 
-BinarySearchTree::BinarySearchTree(const BinarySearchTree& other_tree) {
-    if (other_tree.tree_size == 0) return;
-    tree_size = other_tree.tree_size;
-    deep_copy_tree(root, other_tree.root);
-}
+BinarySearchTree::BinarySearchTree(const BinarySearchTree& other_tree) :
+root(deep_copy(other_tree.root)), tree_size{other_tree.tree_size} {}
 
 BinarySearchTree::BinarySearchTree(BinarySearchTree&& other_tree) :
-root(std::exchange(other_tree.root, nullptr)), tree_size(std::exchange(other_tree.tree_size, 0)) {}
+root(std::move(other_tree.root)), tree_size(other_tree.tree_size) {}
 
 BinarySearchTree& BinarySearchTree::operator=(const BinarySearchTree& other_tree) {
-    clear();
-    tree_size = other_tree.tree_size;
-    deep_copy_tree(root, other_tree.root);
+    if (this != &other_tree) {
+        tree_size = other_tree.tree_size;
+        root = deep_copy(other_tree.root);
+    }
     return *this;
 }
 
 BinarySearchTree& BinarySearchTree::operator=(BinarySearchTree&& other_tree) {
-    clear();
-    tree_size = other_tree.tree_size;
-    deep_copy_tree(root, other_tree.root);
-    
-    other_tree.tree_size = 0;
-    other_tree.root = nullptr;
-    
+    if (this != &other_tree) {
+        tree_size = other_tree.tree_size;
+        other_tree.tree_size = 0;
+        root = std::move(other_tree.root);
+    }
     return *this;
 }
 
@@ -102,11 +98,12 @@ std::vector<int> BinarySearchTree::get_level_order_vals() const {
     return vals;
 }
 
-void BinarySearchTree::deep_copy_tree(std::unique_ptr<Node>& dest_node, const std::unique_ptr<Node>& source_node) {
-    if (!source_node) return;
-    dest_node = std::make_unique<Node>(source_node->val);
-    deep_copy_tree(dest_node->left, source_node->left);
-    deep_copy_tree(dest_node->right, source_node->right);
+std::unique_ptr<BinarySearchTree::Node> BinarySearchTree::deep_copy(const std::unique_ptr<Node>& source_node) {
+    if (!source_node) return nullptr;
+    auto dest_node = std::make_unique<Node>(source_node->val);
+    dest_node->left = deep_copy(source_node->left);
+    dest_node->right = deep_copy(source_node->right);
+    return dest_node;
 }
 
 void BinarySearchTree::build_from_vector_balanced(std::vector<int>::iterator it_b, std::vector<int>::iterator it_e) {
@@ -158,7 +155,7 @@ void BinarySearchTree::remove_node(const int value, std::unique_ptr<Node>& curr_
             curr_node = std::move(curr_node->right);
         } else {
             // both right and left children: replace val by left subtree's max value
-            Node* temp = find_max_node(curr_node->left);
+            const Node* temp = find_max_node(curr_node->left);
             curr_node->val = temp->val;
             // then remove left subtree's max node
             remove_node(temp->val, curr_node->left);
@@ -166,13 +163,13 @@ void BinarySearchTree::remove_node(const int value, std::unique_ptr<Node>& curr_
     }
 }
 
-BinarySearchTree::Node* BinarySearchTree::find_min_node(const std::unique_ptr<Node>& curr_node) const {
+const BinarySearchTree::Node* BinarySearchTree::find_min_node(const std::unique_ptr<Node>& curr_node) const {
     if (!curr_node) return nullptr;
     if (!curr_node->left) return curr_node.get();
     return find_min_node(curr_node->left);
 }
 
-BinarySearchTree::Node* BinarySearchTree::find_max_node(const std::unique_ptr<Node>& curr_node) const {
+const BinarySearchTree::Node* BinarySearchTree::find_max_node(const std::unique_ptr<Node>& curr_node) const {
     if (!curr_node) return nullptr;
     if (!curr_node->right) return curr_node.get();
     return find_max_node(curr_node->right);

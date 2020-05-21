@@ -57,14 +57,14 @@ private:
     std::unique_ptr<Node> root;
     int tree_size;
     
-    void deep_copy_tree(std::unique_ptr<Node>& dest_node, const std::unique_ptr<Node>& source_node);
+    std::unique_ptr<Node> deep_copy(const std::unique_ptr<Node>& source_node);
 
     void build_from_vector_balanced(std::vector<int>::iterator it_b, std::vector<int>::iterator it_e);
     void insert_node(int value, std::unique_ptr<Node>& curr_node);
     void remove_node(int value, std::unique_ptr<Node>& curr_node);
     
-    Node* find_min_node(const std::unique_ptr<Node>& curr_node) const;
-    Node* find_max_node(const std::unique_ptr<Node>& curr_node) const;
+    const Node* find_min_node(const std::unique_ptr<Node>& curr_node) const;
+    const Node* find_max_node(const std::unique_ptr<Node>& curr_node) const;
     bool contains(int value, const std::unique_ptr<Node>& curr_node) const;
     
     bool balanced(const std::unique_ptr<Node>& curr_node, int height) const;
