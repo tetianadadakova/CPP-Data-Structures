@@ -12,8 +12,8 @@ public:
     BinarySearchTree(int value);
     BinarySearchTree(const BinarySearchTree& other_tree);
     BinarySearchTree(BinarySearchTree&& other_tree);
-    BinarySearchTree& operator=(const BinarySearchTree& other_tree);
-    BinarySearchTree& operator=(BinarySearchTree&& other_tree);
+    friend void swap(BinarySearchTree& left_tree, BinarySearchTree& right_tree);
+    BinarySearchTree& operator=(BinarySearchTree other_tree);
     ~BinarySearchTree() = default;
 
     void build_from_vector(std::vector<int>& values);

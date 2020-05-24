@@ -292,14 +292,13 @@ int main() {
     std::cout << std::endl;
     
     
-    
     // ---------------------------------------
     std::cout << "--------------------------\n";
     std::cout << "Copy constructor" << std::endl;
     BinarySearchTree myBST_orig;
     
     myBST_orig.build_from_vector_balanced(values);
-    BinarySearchTree myBST_copy = myBST_orig;
+    BinarySearchTree myBST_copy(myBST_orig);
     
     myBST_orig.insert_node(15);
     myBST_copy.insert_node(12);
@@ -321,7 +320,6 @@ int main() {
     // ---------------------------------------
     std::cout << "--------------------------\n";
     std::cout << "Copy assignment operator" << std::endl;
-    // Not really sure how to test this
     
     BinarySearchTree myBST_orig_assign;
     std::vector<int> values1 {1, 2, 3, 4, 5};
@@ -388,5 +386,4 @@ int main() {
     std::cout << "myBST_orig_move_assign after move: empty? " << myBST_orig_move_assign.empty() << "\n";
     std::cout << "myBST_target_move_assign after move: empty? " << myBST_target_move_assign.empty() << "\n";
     
-
 }

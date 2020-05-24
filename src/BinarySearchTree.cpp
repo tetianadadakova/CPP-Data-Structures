@@ -8,22 +8,17 @@ BinarySearchTree::BinarySearchTree(const BinarySearchTree& other_tree) :
 root(deep_copy(other_tree.root)), tree_size{other_tree.tree_size} {}
 
 BinarySearchTree::BinarySearchTree(BinarySearchTree&& other_tree) :
-root(std::move(other_tree.root)), tree_size(other_tree.tree_size) {}
-
-BinarySearchTree& BinarySearchTree::operator=(const BinarySearchTree& other_tree) {
-    if (this != &other_tree) {
-        tree_size = other_tree.tree_size;
-        root = deep_copy(other_tree.root);
-    }
-    return *this;
+root(std::move(other_tree.root)), tree_size(other_tree.tree_size) {
+    other_tree.tree_size = 0;
 }
 
-BinarySearchTree& BinarySearchTree::operator=(BinarySearchTree&& other_tree) {
-    if (this != &other_tree) {
-        tree_size = other_tree.tree_size;
-        other_tree.tree_size = 0;
-        root = std::move(other_tree.root);
-    }
+void swap(BinarySearchTree& left_tree, BinarySearchTree& right_tree) {
+    std::swap(left_tree.tree_size, right_tree.tree_size);
+    std::swap(left_tree.root, right_tree.root);
+}
+
+BinarySearchTree& BinarySearchTree::operator=(BinarySearchTree other_tree) {
+    swap(*this, other_tree);
     return *this;
 }
 
@@ -125,7 +120,7 @@ void BinarySearchTree::insert_node(int value, std::unique_ptr<Node>& curr_node) 
         return;
     }
     
-    if (value == curr_node->val) // handle duplicate vals - ignore?
+    if (value == curr_node->val)
         return;
     
     if (value < curr_node->val)
